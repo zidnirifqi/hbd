@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Puput Day's🎂</title>
+  <link rel="shortcut icon" type="image/x-icon" href="./img/hbd.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{--primary:#ff4d6d;--paper-bg:#fffefb}
+    html,body{height:100%;margin:0;font-family:'Quicksand',sans-serif;background:#ffeef3;overflow-x:hidden}
+    .bg{
+      min-height:100vh;
+      background: url('./img/12.png') center/cover no-repeat fixed;
+      display:flex;align-items:center;justify-content:center;position:relative;
+    }
+    .stage{width:100%;max-width:920px;margin:30px;text-align:center;position:relative;z-index:2}
+
+    /* Timer */
+    #timer{margin-bottom:18px}
+    #timer h5{margin:0 0 8px;color:var(--primary)}
+    #timer ul{list-style:none;padding:0;margin:0;display:flex;gap:10px;justify-content:center}
+    #timer li{background:rgba(255,255,255,0.85);padding:8px 14px;border-radius:10px;font-weight:700;color:var(--primary);box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+
+    /* Slide Satu (foto) */
+    #slideSatu{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+    .photo{width:440px;max-width:86%;border-radius:14px;box-shadow:0 22px 50px rgba(0,0,0,0.28);border:6px solid rgba(255,255,255,0.6);transform-origin:center}
+    #tap{margin-top:10px;color:#555;font-size:15px;opacity:0.95;animation:pulse 1.8s infinite}
+    @keyframes pulse{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+
+    /* Paper slides */
+    .paper{width:90%;max-width:760px;margin:16px auto;background:var(--paper-bg);border-radius:14px;box-shadow:0 18px 40px rgba(0,0,0,0.12);overflow:hidden;border:1px solid rgba(0,0,0,0.05)}
+    .paper-content{padding:36px 40px;background: url('./img/111.jpg') center/cover no-repeat; text-align:left;line-height:1.7;color:#333;font-size:18px;white-space:pre-line;border-radius:12px;box-shadow:inset 0 0 12px rgba(0,0,0,0.06)}
+    .teks{font-weight:500}
+
+    /* choices */
+    .choices{width:90%;max-width:480px;margin:22px auto;background:#fff;border-radius:20px;padding:25px;box-shadow:0 10px 30px rgba(0,0,0,0.12);text-align:center}
+    .choices .btn{border-radius:40px;padding:10px 18px;min-width:120px;font-weight:600;cursor:pointer;border:none}
+
+    /* final */
+    .final-box{width:90%;max-width:520px;margin:18px auto;background:#fff;border-radius:12px;padding:14px;text-align:center;box-shadow:0 8px 22px rgba(0,0,0,0.12)}
+
+    /* confetti pieces (plain) */
+    .conf{position:fixed;top:-20px;z-index:9999;pointer-events:none;border-radius:2px}
+    @keyframes confFall { to { transform: translateY(120vh) rotate(720deg); opacity:0 } }
+
+    .d-none{display:none!important}
+    @media(max-width:480px){
+      .photo{width:320px}
+      .paper-content{padding:20px;font-size:16px}
+    }
+  </style>
+</head>
+<body>
+  <audio id="background-music" src="./music/westlife.mp3" preload="auto" loop></audio>
+
+  <div class="bg">
+    <div class="stage" id="content">
+      <!-- countdown -->
+      <div id="timer" class="center-col">
+        <h5>Menuju ulang tahun <strong id="name">Dian Putri</strong> berikutnya :</h5>
+        <ul>
+          <li><span id="days">0</span> Hari</li>
+          <li><span id="hours">0</span> Jam</li>
+          <li><span id="minutes">0</span> Menit</li>
+          <li><span id="seconds">0</span> Detik</li>
+        </ul>
+      </div>
+
+      <!-- Slide 1 -->
+      <div id="slideSatu">
+        <img src="./img/3.png" alt="Foto" class="photo" id="mainPhoto">
+        <div id="tap" class="d-none">Ketuk layar untuk melanjutkan ✨</div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div id="slideDua" class="paper d-none">
+        <div class="paper-content"><p id="teks1" class="teks"></p></div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div id="slideTiga" class="paper d-none">
+        <div class="paper-content"><p id="teks2" class="teks"></p></div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div id="slideEmpat" class="choices d-none">
+        <h5>Kamu suka nggak?</h5>
+        <div style="display:flex;gap:14px;justify-content:center;margin-top:10px">
+          <button id="gak" class="btn" style="background:#ffb3c1">Gak 😢</button>
+          <button id="suka" class="btn" style="background:#b6e2a1">Suka 💕</button>
+        </div>
+      </div>
+
+      <!-- Slide 5 -->
+      <div id="slideLima" class="d-none">
+        <div class="final-box d-none" id="finalBox"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* ============================
+   All JS in one place (no libs)
+   ============================ */
+
+const music = document.getElementById('background-music');
+const slideSatu = document.getElementById('slideSatu');
+const slideDua = document.getElementById('slideDua');
+const slideTiga = document.getElementById('slideTiga');
+const slideEmpat = document.getElementById('slideEmpat');
+const slideLima = document.getElementById('slideLima');
+const finalBox = document.getElementById('finalBox');
+const tap = document.getElementById('tap');
+
+const teksA = `Barakallah Fi Umrik, selamat ulang tahun sayangg ❤️🎉
+
+Terimakasih udah jadi orang yang selalu ada buat aku, sabar ngadepin aku dan selalu men-support aku walaupun belum jadi apa-apa atau setidaknya naik level lebih tinggi dari sebelumnya, tapi kamu masih terus nemenin langkah aku sampai sekarang.`;
+
+const teksB = `Semangat sayang buat kejar mimpi kamu! Semoga tahun depan jadi tahun keberuntungan kamu menjadi PNS yang kamu impikan selama ini. Kamu pasti bisa sayang, percaya itu! Jangan takut, aku di sini selalu nemenin kamu dan selalu ngedukung setiap langkah baik kamu. Jangan pernah ngerasa sendiri yaa 💕 🤗
+
+Jangan pernah bosen ya sayang, tetap kaya gini terus. Walaupun terkadang kita berantem, tapi begitulah yang namanya hubungan. Yang penting, di setiap masalah kita harus bisa cari jalan keluarnya bersama ❤️
+
+Semoga di ulang tahun ini kamu diberikan umur yang berkah dan bermanfaat, dilancarkan rezekinya, dimudahkan urusan serta hajatnya, dijauhkan dari hal-hal negatif. Aamiin 🤲
+lvyu more❤️
+--zidnirifi--`;
+
+/* ---------- countdown ---------- */
+function nextBirthdayDate(day=26, monthIndex=9){
+  const now = new Date();
+  let candidate = new Date(now.getFullYear(), monthIndex, day, 0,0,0);
+  if (candidate <= now) candidate = new Date(now.getFullYear()+1, monthIndex, day, 0,0,0);
+  return candidate;
+}
+let nextB = nextBirthdayDate();
+function updateCountdown(){
+  const now = new Date();
+  const diff = nextB - now;
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff / (1000*60*60)) % 24);
+  const m = Math.floor((diff / (1000*60)) % 60);
+  const s = Math.floor((diff / 1000) % 60);
+  document.getElementById('days').textContent = d;
+  document.getElementById('hours').textContent = h;
+  document.getElementById('minutes').textContent = m;
+  document.getElementById('seconds').textContent = s;
+}
+updateCountdown();
+const cInterval = setInterval(updateCountdown,1000);
+
+/* ---------- confetti (many, slow) ---------- */
+function spawnConfetti(count=180){
+  const colors = ['#FF6B6B','#FFD93D','#6BCB77','#4D96FF','#FF8C00','#F15BB5','#7B68EE','#43AA8B'];
+  for(let i=0;i<count;i++){
+    const el = document.createElement('div');
+    el.className = 'conf';
+    const w = 6 + Math.random()*12;
+    el.style.width = w + 'px';
+    el.style.height = (8 + Math.random()*16) + 'px';
+    el.style.left = (Math.random()*100) + 'vw';
+    el.style.background = colors[Math.floor(Math.random()*colors.length)];
+    el.style.opacity = 0.9 * (0.4 + Math.random()*0.6);
+    el.style.transform = `rotate(${Math.random()*360}deg)`;
+    // random horizontal drift using translateX in animation
+    const dur = 6000 + Math.random()*9000; // slow fall
+    const drift = (Math.random()*160 - 80); // px
+    el.style.animation = `confFall ${dur}ms cubic-bezier(.15,.8,.25,1) ${Math.random()*600}ms forwards`;
+    // apply initial translateX via inline transform (will be overridden by keyframes translate)
+    el.style.willChange = 'transform, opacity';
+    document.body.appendChild(el);
+    // cleanup
+    setTimeout(()=>{ if(el.parentNode) el.parentNode.removeChild(el); }, dur + 1200);
+  }
+}
+
+/* Define confFall keyframes dynamically (to handle drift) */
+(function addConfKeyframes(){
+  const style = document.createElement('style');
+  style.innerHTML = `
+    @keyframes confFall {
+      0% { transform: translateY(-10vh) rotate(0deg); opacity:1; }
+      100% { transform: translateY(120vh) rotate(720deg); opacity:0; }
+    }`;
+  document.head.appendChild(style);
+})();
+
+/* ---------- typing (manual & reliable) ---------- */
+/* typeSlowly: types a string into element, returns Promise when finished */
+function typeSlowlyInto(el, text, charDelay = 100) {
+  return new Promise(resolve => {
+    let i = 0;
+    function step() {
+      // safety: if element removed, stop
+      if (!document.body.contains(el)) { resolve(); return; }
+      if (i < text.length) {
+        // append char, but preserve HTML special characters
+        const ch = text.charAt(i);
+        el.innerHTML += ch === '\n' ? '<br>' : ch;
+        i++;
+        setTimeout(step, charDelay);
+      } else {
+        resolve();
+      }
+    }
+    step();
+  });
+}
+
+/* typeParagraphs: splits by double-newline, types with paragraph delay */
+async function typeParagraphsInto(selector, content, charDelay=100, paragraphDelay=2500) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  el.innerHTML = ''; // clear before typing
+  const paragraphs = content.split('\n\n');
+  for (let p=0;p<paragraphs.length;p++){
+    await typeSlowlyInto(el, paragraphs[p], charDelay);
+    if (p < paragraphs.length - 1) {
+      el.innerHTML += '<br><br>';
+      await new Promise(r => setTimeout(r, paragraphDelay));
+    }
+  }
+}
+
+/* ---------- sequence ---------- */
+let started = false;
+document.body.addEventListener('click', async function startOnce(){
+  if (started) return;
+  started = true;
+  // play music
+  try{ await music.play(); } catch(e) { /* ignore autoplay blocks */ }
+
+  // hide timer after small pause, show tap and confetti earlier (already handled on load)
+  // perform small animation for photo -> flip out then show paper
+  tap.classList.add('d-none');
+
+  // spawn confetti burst
+  spawnConfetti(160);
+
+  // make photo flip out gently
+  const photo = document.getElementById('mainPhoto');
+  if (photo){
+    photo.style.transition = 'transform 0.9s ease, opacity 0.9s ease';
+    photo.style.transform = 'perspective(800px) rotateX(20deg) translateY(-20px)';
+    photo.style.opacity = '0';
+    await new Promise(r => setTimeout(r, 950));
+    slideSatu.classList.add('d-none');
+  }
+
+  // show first paper and type slowly (very slow)
+  slideDua.classList.remove('d-none');
+  await typeParagraphsInto('#teks1', teksA, 100, 2800); // charDelay 100ms, paragraphDelay 2800ms
+
+  // small pause and move to second
+  await new Promise(r => setTimeout(r, 900));
+  slideDua.classList.add('d-none');
+  slideTiga.classList.remove('d-none');
+
+  await typeParagraphsInto('#teks2', teksB, 100, 2800);
+
+  // after finish
+  await new Promise(r => setTimeout(r, 900));
+  slideTiga.classList.add('d-none');
+  slideEmpat.classList.remove('d-none');
+});
+
+/* ---------- initial behavior: show timer 5s, then reveal photo + confetti ---------- */
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(()=>{
+    document.getElementById('timer').classList.add('d-none');
+    document.getElementById('tap').classList.remove('d-none');
+    spawnConfetti(90);
+  }, 5000);
+});
+
+/* ---------- choices ---------- */
+document.getElementById('suka').addEventListener('click', ()=>{
+  slideEmpat.classList.add('d-none');
+  slideLima.classList.remove('d-none');
+  finalBox.classList.remove('d-none');
+  finalBox.innerHTML = `<p style="color:#e33b6e;font-weight:700;margin:6px 0">Makasih sayang, lopeyouu 😘</p>`;
+});
+
+document.getElementById('gak').addEventListener('click', ()=>{
+  slideEmpat.classList.add('d-none');
+  slideLima.classList.remove('d-none');
+  finalBox.classList.remove('d-none');
+  finalBox.innerHTML = `<p style="color:#333;font-weight:700;margin:6px 0">Yahh... 😢</p>
+    <div style="background:#fff;padding:12px;border-radius:8px;color:#e33b6e;font-weight:700;margin-top:8px">Tapi aku tetap sayang kamu kok ❤️</div>`;
+});
+</script>
+</body>
+</html>

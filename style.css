@@ -1,0 +1,195 @@
+/* ====== Gaya Umum ====== */
+body, html {
+  height: 100%;
+  font-family: 'Quicksand', sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: url('./img/12.png') center/cover no-repeat fixed;
+}
+
+/* ====== Latar Belakang Cerah & Ramai ====== */
+.bg {
+  background: url('./img/12.png') center/cover no-repeat;
+  min-height: 100vh;
+  background-attachment: fixed;
+  overflow: hidden;
+  animation: bgMove 10s ease-in-out infinite alternate;
+}
+@keyframes bgMove {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.15) saturate(1.2); }
+}
+
+/* ====== Foto Utama ====== */
+.img {
+  display: inline-block;
+  margin-top: 60px;
+  width: 500px;
+  border-radius: 25px;
+  box-shadow: 0 10px 30px rgba(255, 182, 193, 0.8);
+  animation: floaty 4s ease-in-out infinite;
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ====== Kertas Tulisan ====== */
+/* .paper {
+  position: relative;
+  width: 90%;
+  max-width: 750px;
+  margin: 60px auto;
+  background: #fffefb;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+
+.paper-content {
+  padding: 40px 30px;
+  background: url('./img/book-page.png') center/cover no-repeat;
+  border-radius: 20px;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.15);
+  color: #333;
+  font-size: 18px;
+  line-height: 32px;
+  text-align: left;
+  white-space: pre-line;
+} */
+
+/* ====== Kertas Tulisan ====== */
+.paper {
+  position: relative;
+  width: 90%;
+  max-width: 760px;
+  margin: 40px auto;
+  background: #fffdf4;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* ====== Efek Buku Bergaris ====== */
+.paper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    /* garis horizontal seperti kertas */
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.05) 0px,
+      rgba(0, 0, 0, 0.05) 1px,
+      transparent 1px,
+      transparent 28px
+    ),
+    /* warna dasar kertas */
+    #fffdf6;
+  z-index: 0;
+}
+
+/* garis merah margin kiri (buku tulis klasik) */
+.paper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 60px;
+  width: 2px;
+  height: 100%;
+  background: rgba(255, 80, 80, 0.5);
+  z-index: 1;
+}
+
+/* ====== Isi Tulisan di Atas Kertas ====== */
+.paper-content {
+  position: relative;
+  z-index: 2;
+  padding: 40px 50px;
+  color: #333;
+  font-size: 18px;
+  line-height: 1.8;
+  text-align: left;
+  white-space: pre-line;
+  font-family: 'Quicksand', sans-serif;
+}
+
+/* efek cahaya lembut */
+.paper-content::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.4), transparent 60%);
+  z-index: -1;
+}
+
+
+/* ====== Teks ====== */
+.teks {
+  font-weight: 500;
+  color: #3f3f44;
+}
+
+/* ====== Countdown ====== */
+#timer ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 0;
+  margin: 10px 0 30px 0;
+}
+#timer li {
+  background: rgba(255,255,255,0.8);
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: #e64c78;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* ====== Kotak Tombol Suka/Gak Suka ====== */
+.kotak {
+  position: relative;
+  background: rgba(255,255,255,0.95);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  max-width: 400px;
+  margin: 50px auto;
+  text-align: center;
+}
+
+/* ====== Efek Kertas Jatuh Warna-warni ====== */
+.confetti {
+  position: fixed;
+  top: -10px;
+  opacity: 0.9;
+  border-radius: 50%;
+  animation: fall linear infinite;
+  z-index: 9999;
+  mix-blend-mode: screen;
+}
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+  }
+}
+
+/* ====== Tambahan Glow di Area Ucapan ====== */
+.paper::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.4), transparent 70%);
+  pointer-events: none;
+}
+
+/* ====== Efek Cahaya Sparkle ====== */
+@keyframes sparkle {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+}
