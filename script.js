@@ -8,15 +8,33 @@ const slideLima = $("#slideLima");
 const trims = $("#trims");
 
 // === Teks ucapan ===
-const text1 = `Barakallah Fi Umrik, selamat ulang tahun sayangg ❤️🎉
+const text1 = `Barakallah Fii Umrik, selamat ulang tahun sayangku ❤️🎉
 
-Terimakasih udah jadi orang yang selalu ada buat aku, sabar ngadepin aku dan selalu men-support aku walaupun belum jadi apa-apa atau setidaknya naik level lebih tinggi dari sebelumnya, tapi kamu masih terus nemenin langkah aku sampai sekarang.`;
+Terima kasih sudah jadi orang yang selalu ada buat aku
+selalu sabar ngadepin sikap aku,
+dan terus support aku meski aku belum jadi apa-apa.
 
-const text2 = `Semangat sayang buat kejar mimpi kamu! Semoga tahun depan jadi tahun keberuntungan kamu menjadi PNS yang kamu impikan selama ini. Kamu pasti bisa sayang, percaya itu! Jangan takut, aku di sini selalu nemenin kamu dan selalu ngedukung setiap langkah baik kamu. Jangan pernah ngerasa sendiri yaa 💕 🤗
+Kamu gak pernah ninggalin, malah terus nemenin langkah aku sampai sekarang.
+Semoga Allah selalu jaga kamu, kasih kebahagiaan tanpa henti,
+dan semoga semua doa serta harapanmu pelan-pelan jadi kenyataan💕`;
 
-Jangan pernah bosan ya sayang, tetap kaya gini terus. Ya walaupun terkadang berantem, tapi begitulah yang namanya hubungan. Yang penting, di setiap masalah kita harus bisa cari jalan keluarnya bersama ❤️
+const text2 = `Semangat ya, sayang, buat terus mengejar mimpi kamu!
+Semoga tahun depan jadi tahun keberuntungan kamu — tahun di mana kamu berhasil jadi PNS seperti yang selama ini kamu impikan.
+Kamu pasti bisa, sayang. Percaya itu! 💪
+Jangan takut, karena aku selalu ada di sini, nemenin dan ngedukung setiap langkah baik kamu.
+Jangan pernah ngerasa sendiri, ya 💕🤗
 
-Semoga di ulang tahun ini kamu diberikan umur yang berkah dan bermanfaat, dilancarkan rezekinya, dimudahkan urusan serta hajatnya, dijauhkan dari hal-hal negatif. Aamiin 🤲`;
+Jangan pernah bosen, ya sayang. Tetap seperti ini terus.
+Walaupun kadang kita berantem, itulah namanya hubungan — gak selalu mulus, tapi selalu berjuang bareng.
+Yang penting, setiap ada masalah, kita cari jalan keluarnya bersama ❤️
+
+Semoga di ulang tahun kali ini kamu diberi umur yang berkah dan bermanfaat,
+dilancarkan rezekinya, dimudahkan segala urusan dan hajatnya,
+serta dijauhkan dari hal-hal negatif.
+Aamiin 🤲
+
+Love you more ❤️
+— zidnirifqi —`;
 
 // === Klik pertama mulai semuanya ===
 document.body.addEventListener("click", startSequence, { once: true });
@@ -134,3 +152,4 @@ function updateCountdown() {
 }
 setInterval(updateCountdown, 1000);
 updateCountdown();
+
